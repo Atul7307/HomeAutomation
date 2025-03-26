@@ -1,8 +1,12 @@
 const mongoose = require("mongoose");
 
-const DeviceSchema = new mongoose.Schema({
-    name: String,
-    status: String,
+const deviceSchema = new mongoose.Schema({
+  _id: { type: String, required: true }, // Enforce custom string IDs
+  name: { type: String, required: true },
+  status: { type: Boolean, default: false } // Ensure boolean type
 });
 
-module.exports = mongoose.model("Device", DeviceSchema);
+// Prevent model overwrite
+const Device = mongoose.models.Device || mongoose.model("Device", deviceSchema);
+
+module.exports = Device;
